@@ -1,0 +1,8 @@
+# corp104_backup logrotate, Manage by Puppet.
+<%= @log_dir %>/*.log {
+  daily
+  missingok
+  compress
+  rotate 30
+  notifempty
+}

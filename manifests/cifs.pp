@@ -28,4 +28,9 @@ define corp104_backup::cifs (
     hour    => $cron_hour,
     minute  => $cron_minute,
   }
+
+  file { '/etc/logrotate.d/corp104_backup':
+    ensure => present,
+    content => template("${module_name}/corp104_backup.erb"),
+  }
 }
