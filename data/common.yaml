@@ -1,0 +1,17 @@
+corp104_backup::bin_dir: '/usr/local/bin'
+corp104_backup::bin_owner: 'root'
+corp104_backup::bin_group: 'root'
+corp104_backup::bin_mode: '0700'
+corp104_backup::log_dir: '/var/log/backup'
+corp104_backup::tmp_dir: '/tmp'
+corp104_backup::tmp_backup_dir: "_backup"
+corp104_backup::save_day: 7
+corp104_backup::server: ~
+corp104_backup::server_target: ~
+corp104_backup::local_target: ~
+corp104_backup::auth_user: ~
+corp104_backup::auth_pass: ~
+corp104_backup::http_proxy: ~
+corp104_backup::slack: ~
+corp104_backup::cron_hour: '0'
+corp104_backup::cron_minute: '30'
