@@ -3,7 +3,7 @@ cache: bundler
 script: bundle exec rake release_checks
 before_install:
 #- gem update bundler
-- gem install bundler -v 1.16.1
+- gem install bundler --force
 matrix:
   fast_finish: true
   include:
