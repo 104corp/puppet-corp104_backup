@@ -41,13 +41,17 @@ logFormat() {
   STATUS=$1
   shift
   if [ $STATUS == 'warn' ]; then
-    echo "$(date "+%Y-%m-%d %H:%M:%S")-[warn]-[${HOSTNAME}(${IP})]: $@" >> $LOG
-  elif [ $STATUS == 'info' ]; then
-    echo "$(date "+%Y-%m-%d %H:%M:%S")-[info]-[${HOSTNAME}(${IP})]: $@" >> $LOG
-  elif [ $STATUS == 'error' ]; then
-    echo "$(date "+%Y-%m-%d %H:%M:%S")-[error]-[${HOSTNAME}(${IP})]: $@" >> $LOG
+    echo "$(date "+%Y-%m-%d %H:%M:%S")-[Warn]-[${HOSTNAME}(${IP})]: $@" >> $LOG
     if [ "$SLACK" = true ]; then
-      notification "slack" "[error]-[${HOSTNAME}(${IP})]: $@ you can see backup log $LOG"
+      notification "slack" "[Warn]-[${HOSTNAME}(${IP})]: $@ you can see backup log $LOG"
+    fi
+  elif [ $STATUS == 'info' ]; then
+    echo "$(date "+%Y-%m-%d %H:%M:%S")-[Info]-[${HOSTNAME}(${IP})]: $@" >> $LOG
+  elif [ $STATUS == 'error' ]; then
+    echo "$(date "+%Y-%m-%d %H:%M:%S")-[Error]-[${HOSTNAME}(${IP})]: $@" >> $LOG
+    if [ "$SLACK" = true ]; then
+      notification "slack" "[Error]-[${HOSTNAME}(${IP})]: $@ you can see backup log $LOG"
+      exit 1
     fi
   fi
 }
@@ -88,7 +92,7 @@ mountSet() {
       if [ $? -eq 0 ]; then
         logFormat "info" "mount cifs device OK !!"
       else
-        logFormat "error" "\`mount cifs device fail !!\`"
+        logFormat "error" "mount cifs device fail !!"
       fi
     else
       /bin/mount -t cifs -o username="${AUTH_USER}",password="${AUTH_PASS}" //${SERVER}${SERVER_TARGET} $LOCAL_TARGET
@@ -113,8 +117,14 @@ mountSet() {
 backupWork() {
   for (( i = 0; i < ${#BACKUP_LIST[@]}; i++ )); do
     logFormat "info" "[${BACKUP_LIST[i]}]: Sync to ${TMP_DIR}/${BACKUP_TMP_DIR} ..."
-    /usr/bin/rsync -aqR ${BACKUP_LIST[i]} ${TMP_DIR}/$BACKUP_TMP_DIR/
-    
+
+    if [ -d ${BACKUP_LIST[i]} ] || [ -e ${BACKUP_LIST[i]}]; then
+      /usr/bin/rsync -aqR ${BACKUP_LIST[i]} ${TMP_DIR}/$BACKUP_TMP_DIR/
+    else
+      logFormat "warn" "The backup list '${BACKUP_LIST[i]}' No such file or directory."
+      break
+    fi
+
     diff ${BACKUP_LIST[i]} ${TMP_DIR}/${BACKUP_TMP_DIR}${BACKUP_LIST[i]}
 
     if [ $? -eq 0 ]; then
