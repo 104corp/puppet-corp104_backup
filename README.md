@@ -44,7 +44,7 @@ corp104_backup::cifs { 'default':
 
 ```puppet
 class { 'corp104_backup':
-  server        => '10.1.10.200';
+  server        => '10.1.10.200',
   server_target => '/backup',
   auth_user     => 'backup_user',
   auth_pass     => 'backup_pass',

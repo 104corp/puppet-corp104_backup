@@ -14,7 +14,11 @@ describe 'install corp104_backup' do
   context 'generate backup script' do
     it 'should install package' do
       pp = <<-EOS
-        include corp104_backup
+        class { 'corp104_backup':
+          server        => '10.1.10.200',
+          server_target => '/backup',
+          local_target  => '/backup',
+        } 
         corp104_backup::cifs { 'default':
           backup_list => [ '/tmp', '/var/tmp' ],
         }
