@@ -47,7 +47,7 @@ logFormat() {
   elif [ $STATUS == 'error' ]; then
     echo "$(date "+%Y-%m-%d %H:%M:%S")-[error]-[${HOSTNAME}(${IP})]: $@" >> $LOG
     if [ "$SLACK" = true ]; then
-      notification "slack" "[error]-[${HOSTNAME}(${IP})]: $@, you can see backup log $LOG"
+      notification "slack" "[error]-[${HOSTNAME}(${IP})]: $@ you can see backup log $LOG"
     fi
   fi
 }
@@ -88,7 +88,7 @@ mountSet() {
       if [ $? -eq 0 ]; then
         logFormat "info" "mount cifs device OK !!"
       else
-        logFormat "error" "mount cifs device fail !!"
+        logFormat "error" "\`mount cifs device fail !!\`"
       fi
     else
       /bin/mount -t cifs -o username="${AUTH_USER}",password="${AUTH_PASS}" //${SERVER}${SERVER_TARGET} $LOCAL_TARGET
