@@ -14,6 +14,9 @@ describe 'install corp104_backup' do
   context 'generate backup script' do
     it 'should install package' do
       pp = <<-EOS
+        package { 'cron':
+          ensure => present,
+        }
         class { 'corp104_backup':
           server        => '10.1.10.200',
           server_target => '/backup',
