@@ -30,7 +30,7 @@ define corp104_backup::cifs (
   }
 
   file { '/etc/logrotate.d/corp104_backup':
-    ensure => present,
+    ensure  => present,
     content => template("${module_name}/corp104_backup.erb"),
   }
 }
