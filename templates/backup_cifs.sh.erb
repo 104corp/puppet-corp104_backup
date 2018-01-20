@@ -118,7 +118,7 @@ backupWork() {
   for (( i = 0; i < ${#BACKUP_LIST[@]}; i++ )); do
     logFormat "info" "[${BACKUP_LIST[i]}]: Sync to ${TMP_DIR}/${BACKUP_TMP_DIR} ..."
 
-    if [ -d ${BACKUP_LIST[i]} ] || [ -e ${BACKUP_LIST[i]}]; then
+    if [ -d ${BACKUP_LIST[i]} ] || [ -e ${BACKUP_LIST[i]} ]; then
       /usr/bin/rsync -aqR ${BACKUP_LIST[i]} ${TMP_DIR}/$BACKUP_TMP_DIR/
     else
       logFormat "warn" "The backup list '${BACKUP_LIST[i]}' No such file or directory."
