@@ -1,3 +1,7 @@
+## 2018-01-20 - Release 2.0.1
+
+- fix backup_list is file
+
 ## 2018-01-18 - Release 2.0.0
 
 - refactor all.
