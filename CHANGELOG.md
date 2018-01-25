@@ -1,3 +1,7 @@
+## 2018-01-26 - Release 2.0.2
+
+- rsync support copy link content
+
 ## 2018-01-20 - Release 2.0.1
 
 - fix backup_list is file
