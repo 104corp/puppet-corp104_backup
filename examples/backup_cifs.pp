@@ -7,5 +7,5 @@ class { 'corp104_backup':
 }
 
 corp104_backup::cifs { 'default':
-  backup_list = [ '/tmp', '/var/tmp' ],
+  backup_list => [ '/tmp', '/var/tmp' ],
 }

@@ -36,7 +36,7 @@ include '::corp104_backup'
 
 ```puppet
 corp104_backup::cifs { 'default':
-  backup_list = [ '/tmp', '/var/tmp' ],
+  backup_list => [ '/tmp', '/var/tmp' ],
 }
 ```
 
