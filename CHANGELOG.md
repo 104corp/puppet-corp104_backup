@@ -1,7 +1,8 @@
-## 2018-11-05 - Release 2.1.0
+## 2018-11-05 - Release 3.0.0
 
 - add exclude_list for rsync.
 - not export directory not found to log.
+- refract backup script.
 
 ## 2018-01-26 - Release 2.0.2
 
