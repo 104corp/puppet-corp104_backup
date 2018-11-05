@@ -21,6 +21,7 @@ AUTH_PASS='<%= @auth_pass %>'
 SAVE_DAY=<%= @save_day %>
 LOCAL_TARGET='<%= @local_target %>'
 BACKUP_LIST=(<%= @backup_list.join(' ') -%>)
+EXCLUDE_LIST=(<%= @exclude_list.join(' ') -%>)
 LOG_DIR='<%= @log_dir %>'
 LOG="${LOG_DIR}/backup-<%= @name %>.log"
 TMP_DIR='<%= @tmp_dir %>'
@@ -120,9 +121,6 @@ backupWork() {
 
     if [ -d ${BACKUP_LIST[i]} ] || [ -e ${BACKUP_LIST[i]} ]; then
       /usr/bin/rsync -aqRL ${BACKUP_LIST[i]} ${TMP_DIR}/$BACKUP_TMP_DIR/
-    else
-      logFormat "warn" "The backup list '${BACKUP_LIST[i]}' No such file or directory."
-      break
     fi
 
     diff ${BACKUP_LIST[i]} ${TMP_DIR}/${BACKUP_TMP_DIR}${BACKUP_LIST[i]}
