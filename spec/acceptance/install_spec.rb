@@ -24,6 +24,7 @@ describe 'install corp104_backup' do
         } 
         corp104_backup::cifs { 'default':
           backup_list => [ '/tmp', '/var/tmp' ],
+          exclude_list => [ '.DS_Store', '*.log' ],
         }
       EOS
 

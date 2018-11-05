@@ -20,8 +20,18 @@ AUTH_PASS='<%= @auth_pass %>'
 # Backup Setting
 SAVE_DAY=<%= @save_day %>
 LOCAL_TARGET='<%= @local_target %>'
-BACKUP_LIST=(<%= @backup_list.join(' ') -%>)
-EXCLUDE_LIST=(<%= @exclude_list.join(' ') -%>)
+BACKUP_LIST=(
+<%- @backup_list.each do |backups| -%>
+ <%= backups %>
+<%- end -%>
+)
+
+EXCLUDE_LIST=(
+<%- @exclude_list.each do |excludes| -%>
+ --exclude='<%= excludes -%>'
+<%- end -%>
+)
+
 LOG_DIR='<%= @log_dir %>'
 LOG="${LOG_DIR}/backup-<%= @name %>.log"
 TMP_DIR='<%= @tmp_dir %>'
@@ -117,19 +127,21 @@ mountSet() {
 
 backupWork() {
   for (( i = 0; i < ${#BACKUP_LIST[@]}; i++ )); do
-    logFormat "info" "[${BACKUP_LIST[i]}]: Sync to ${TMP_DIR}/${BACKUP_TMP_DIR} ..."
 
     if [ -d ${BACKUP_LIST[i]} ] || [ -e ${BACKUP_LIST[i]} ]; then
-      /usr/bin/rsync -aqRL ${BACKUP_LIST[i]} ${TMP_DIR}/$BACKUP_TMP_DIR/
+      logFormat "info" "[${BACKUP_LIST[i]}]: Sync to ${TMP_DIR}/${BACKUP_TMP_DIR} ..."
+
+      /usr/bin/rsync -aqRL ${EXCLUDE_LIST[@]} ${BACKUP_LIST[i]} ${TMP_DIR}/$BACKUP_TMP_DIR/
+
+      diff ${BACKUP_LIST[i]} ${TMP_DIR}/${BACKUP_TMP_DIR}${BACKUP_LIST[i]}
+
+      if [ $? -eq 0 ]; then
+        logFormat "info" "[${BACKUP_LIST[i]}]: verify sync OK !!"
+      else
+        logFormat "error" "[${BACKUP_LIST[i]}]: verify content fail !!"
+      fi
     fi
 
-    diff ${BACKUP_LIST[i]} ${TMP_DIR}/${BACKUP_TMP_DIR}${BACKUP_LIST[i]}
-
-    if [ $? -eq 0 ]; then
-      logFormat "info" "[${BACKUP_LIST[i]}]: verify sync OK !!"
-    else
-      logFormat "error" "[${BACKUP_LIST[i]}]: verify content fail !!"
-    fi
   done
 }
 
