@@ -1,3 +1,7 @@
+## 2018-11-08 - Release 3.1.0
+
+- add backup verify control.
+
 ## 2018-11-05 - Release 3.0.0
 
 - add exclude_list for rsync.
