@@ -50,6 +50,7 @@ class corp104_backup (
   Optional[String] $auth_pass,
   Optional[String] $http_proxy,
   Optional[Hash] $slack,
+  Boolean $backup_verify,
   String $bin_dir,
   String $bin_owner,
   String $bin_group,

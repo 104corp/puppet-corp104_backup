@@ -18,6 +18,11 @@ AUTH_PASS='<%= @auth_pass %>'
 <% end -%>
 
 # Backup Setting
+<% if @backup_verify -%>
+BACKUP_VERIFY="1"
+<% else -%>
+BACKUP_VERIFY="0"
+<% end -%>
 SAVE_DAY=<%= @save_day %>
 LOCAL_TARGET='<%= @local_target %>'
 BACKUP_LIST=(
@@ -133,7 +138,10 @@ backupWork() {
 
       /usr/bin/rsync -aqRL ${EXCLUDE_LIST[@]} ${BACKUP_LIST[i]} ${TMP_DIR}/$BACKUP_TMP_DIR/
 
-      diff ${BACKUP_LIST[i]} ${TMP_DIR}/${BACKUP_TMP_DIR}${BACKUP_LIST[i]}
+      # If $BACKUP_VERIFY is enable then diff content
+      if [ $BACKUP_VERIFY == "1" ]; then
+        diff ${BACKUP_LIST[i]} ${TMP_DIR}/${BACKUP_TMP_DIR}${BACKUP_LIST[i]}
+      fi
 
       if [ $? -eq 0 ]; then
         logFormat "info" "[${BACKUP_LIST[i]}]: verify sync OK !!"

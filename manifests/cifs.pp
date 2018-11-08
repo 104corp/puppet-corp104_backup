@@ -1,6 +1,7 @@
 define corp104_backup::cifs (
   Array $backup_list,
   Array $exclude_list,
+  Boolean $backup_verify  = $corp104_backup::backup_verify,
   Optional[String] $server = $corp104_backup::server,
   Optional[String] $server_target = $corp104_backup::server_target,
   Optional[String] $local_target = $corp104_backup::local_target,
