@@ -121,7 +121,7 @@ mountSet() {
     fi
   elif [ $ACTION == 'down' ]; then
     logFormat "info" "umount device $LOCAL_TARGET ..."
-    /bin/umount $LOCAL_TARGET
+    cd /tmp; /bin/umount $LOCAL_TARGET
     if [ $? -eq 0 ]; then
       logFormat "info" "umount device $LOCAL_TARGET OK !!"
     else
