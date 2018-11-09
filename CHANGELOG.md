@@ -1,4 +1,4 @@
-## 2018-11-08 - Release 3.1.1
+## 2018-11-08 - Release 3.1.2
 
 - add backup verify control.
 
