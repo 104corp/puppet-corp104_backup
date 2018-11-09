@@ -39,8 +39,8 @@ EXCLUDE_LIST=(
 
 LOG_DIR='<%= @log_dir %>'
 LOG="${LOG_DIR}/backup-<%= @name %>.log"
-TMP_DIR='<%= @tmp_dir %>'
-BACKUP_TMP_DIR="<%= @tmp_backup_dir %>-$(date +%Y-%m-%d)"
+TMP_DIR="<%= @tmp_dir %>"
+BACKUP_TMP_DIR="<%= @tmp_backup_dir %>-$(date +%Y-%m-%d)-$HOSTNAME"
 <% if @http_proxy -%>
 HTTP_PROXY='<%= @http_proxy %>'
 <% end -%>
@@ -132,6 +132,8 @@ mountSet() {
 
 backupWork() {
   for (( i = 0; i < ${#BACKUP_LIST[@]}; i++ )); do
+
+    test -d $TMP_DIR || mkdir -p $TMP_DIR
 
     if [ -d ${BACKUP_LIST[i]} ] || [ -e ${BACKUP_LIST[i]} ]; then
       logFormat "info" "[${BACKUP_LIST[i]}]: Sync to ${TMP_DIR}/${BACKUP_TMP_DIR} ..."
