@@ -102,6 +102,7 @@ mountSet() {
   ACTION=$1
   if [ $ACTION == 'up' ]; then
     logFormat "info" "mount device $LOCAL_TARGET to //${SERVER}${SERVER_TARGET} ..."
+
     if [ -z $AUTH_USER ] && [ -z $AUTH_PASS]; then
       /bin/mount -t cifs //${SERVER}${SERVER_TARGET} $LOCAL_TARGET
 
@@ -163,7 +164,9 @@ backupCompression() {
   # Compression backup
   logFormat "info" "Compression to ${HOSTNAME}_$(date "+%Y-%m-%d").tar.gz ..."
   cd ${TMP_DIR}; tar zcvf ${LOCAL_TARGET}/${HOSTNAME}/${HOSTNAME}_$(date "+%Y-%m-%d").tar.gz $BACKUP_TMP_DIR
-  if [ $? -eq 0 ]; then
+
+  # When tar exit code is '1' in warring message.
+  if [ $? -eq 0 ] || [ $? -eq 1 ] ; then
     logFormat "info" "Compression OK !!"
     test -d ${TMP_DIR}/${BACKUP_TMP_DIR} && rm -rf ${TMP_DIR}/${BACKUP_TMP_DIR}
   else
@@ -176,7 +179,14 @@ backupCompression() {
 
 
 checkInitial
-mountSet up
+
+# check mount point.
+if mountpoint -q $LOCAL_TARGET; then
+  logFormat "info" "mount point $LOCAL_TARGET is alreay mount "
+else
+  mountSet up
+fi
+
 backupWork
 backupCompression
 mountSet down
