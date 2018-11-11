@@ -1,3 +1,7 @@
+## 2018-11-12 - Release 3.1.3
+
+- check mount point not already.
+
 ## 2018-11-08 - Release 3.1.2
 
 - add backup verify control.
