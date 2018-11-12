@@ -18,11 +18,8 @@ AUTH_PASS='<%= @auth_pass %>'
 <% end -%>
 
 # Backup Setting
-<% if @backup_verify -%>
-BACKUP_VERIFY="1"
-<% else -%>
-BACKUP_VERIFY="0"
-<% end -%>
+BACKUP_ENABLE="<%= @backup_enable %>"
+BACKUP_VERIFY="<%= @backup_verify %>"
 SAVE_DAY=<%= @save_day %>
 LOCAL_TARGET='<%= @local_target %>'
 BACKUP_LIST=(

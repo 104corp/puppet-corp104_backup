@@ -15,4 +15,5 @@ corp104_backup::http_proxy: ~
 corp104_backup::slack: ~
 corp104_backup::cron_hour: '0'
 corp104_backup::cron_minute: '30'
-corp104_backup::backup_verify: false
+corp104_backup::backup_verify: "0"
+corp104_backup::backup_enable: "1"
