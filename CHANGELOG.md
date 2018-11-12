@@ -1,6 +1,7 @@
-## 2018-11-12 - Release 3.1.3
+## 2018-11-12 - Release 4.0.0
 
 - check mount point not already.
+- add backup_manage and modify backup_verify is string.
 
 ## 2018-11-08 - Release 3.1.2
 
