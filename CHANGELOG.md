@@ -1,3 +1,7 @@
+## 2018-11-18 - Release 4.0.2
+
+- fix mount option with auth user.
+
 ## 2018-11-12 - Release 4.0.1
 
 - check mount point not already.
