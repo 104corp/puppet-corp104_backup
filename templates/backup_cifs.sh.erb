@@ -101,7 +101,7 @@ mountSet() {
     logFormat "info" "mount device $LOCAL_TARGET to //${SERVER}${SERVER_TARGET} ..."
 
     if [ -z $AUTH_USER ] && [ -z $AUTH_PASS]; then
-      /bin/mount -t cifs //${SERVER}${SERVER_TARGET} $LOCAL_TARGET
+      /bin/mount ${SERVER}:${SERVER_TARGET} $LOCAL_TARGET
 
       if [ $? -eq 0 ]; then
         logFormat "info" "mount cifs device OK !!"
