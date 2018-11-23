@@ -174,16 +174,17 @@ backupCompression() {
   find ${LOCAL_TARGET}/${HOSTNAME}/ -name "*.tar.gz" -mtime +$SAVE_DAY -type f -delete
 }
 
+if [ $BACKUP_ENABLE -eq "1" ]; then
+  checkInitial
 
-checkInitial
+  # check mount point.
+  if mountpoint -q $LOCAL_TARGET; then
+    logFormat "info" "mount point $LOCAL_TARGET is alreay mount "
+  else
+    mountSet up
+  fi
 
-# check mount point.
-if mountpoint -q $LOCAL_TARGET; then
-  logFormat "info" "mount point $LOCAL_TARGET is alreay mount "
-else
-  mountSet up
+  backupWork
+  backupCompression
+  mountSet down
 fi
-
-backupWork
-backupCompression
-mountSet down
