@@ -1,3 +1,7 @@
+## 2018-11-23 - Release 4.1.0
+
+- backup_enable is control manage.
+
 ## 2018-11-18 - Release 4.0.2
 
 - fix mount option with auth user.
